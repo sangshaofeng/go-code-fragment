@@ -36,6 +36,5 @@ func appendTo() {
 }
 
 func main() {
-	var b bool = string.HasSuffix("sangshaofeng", "h")
-	fmt.Println(b)
+	string.GetStringLength()
 }
