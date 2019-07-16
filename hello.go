@@ -36,5 +36,5 @@ func appendTo() {
 }
 
 func main() {
-	string.GetStringLength()
+	string.ToggleRuneString()
 }
