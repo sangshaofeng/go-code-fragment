@@ -76,7 +76,7 @@ func Comma(s string) string {
 // 注意：如果使用WriteByte方法要使用单引号，因为go语言中单引号表示rune类型，双引号表示字符串
 func Comma2(s string) string {
 	n := len(s)
-	if (n <= 3) {
+	if n <= 3 {
 		return s
 	}
 	var buf bytes.Buffer
