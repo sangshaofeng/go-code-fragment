@@ -59,3 +59,14 @@ func Contains(s, substr  string) bool {
 	}
 	return false
 }
+
+// 为一串字符串数字每隔三位添加一个逗号 如120030 => 120,030
+// comma函数将在最后三个字符前位置将字符串切割为两个子串并插入逗号分隔符，
+// 然后通过递归调用自身来计算出前面的子串
+func Comma(s string) string {
+	n := len(s)
+	if n <= 3 {
+		return s
+	}
+	return Comma(s[:n-3]) + "," + s[n-3:]
+}
