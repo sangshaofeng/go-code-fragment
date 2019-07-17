@@ -12,7 +12,7 @@ import (
 // 求字符串的len，实际是计算字符串中每个字符字节长度的总和
 // 如果想得到真正的字符串长度，通过以下两种方法
 func GetStringLength() {
-	var s string = "hello, 世界"
+	s := "hello, 世界"
 	fmt.Println("the string length is: ", len(s)) // 13
 	// 通过 RuneCountInString 方法计算长度
 	fmt.Println("RuneCountInString: ", utf8.RuneCountInString(s))
