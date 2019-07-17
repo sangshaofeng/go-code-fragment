@@ -3,6 +3,7 @@ package string
 import (
 	"fmt"
 	"unicode/utf8"
+	"bytes"
 )
 
 // golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，
@@ -69,4 +70,22 @@ func Comma(s string) string {
 		return s
 	}
 	return Comma(s[:n-3]) + "," + s[n-3:]
+}
+
+// 非递归版本的comma方法，使用bytes.Buffer
+// 注意：如果使用WriteByte方法要使用单引号，因为go语言中单引号表示rune类型，双引号表示字符串
+func Comma2(s string) string {
+	n := len(s)
+	if (n <= 3) {
+		return s
+	}
+	var buf bytes.Buffer
+	p := n % 3
+	for i := 0; i < n; i++ {
+		if (i - p) % 3 == 0 && i !=0 {
+			buf.WriteString(",") // or buf.WriteByte(',')
+		}
+		buf.WriteByte(s[i])
+	}
+	return buf.String()
 }
