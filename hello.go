@@ -1,9 +1,9 @@
 package main
 
 import (
+	"./string"
 	"fmt"
 	"unicode/utf8"
-	"./string"
 )
 
 // 位运算
@@ -21,7 +21,7 @@ func bitOperation() {
 func stringCode() {
 	a := "Hello"
 	b := "你好"
-	fmt.Println(len(a), len(b)) // 5  6
+	fmt.Println(len(a), len(b))            // 5  6
 	fmt.Println(utf8.RuneCountInString(b)) // 2  通过utf8包中的方法打印出真正的unicode字符数
 }
 
@@ -36,5 +36,5 @@ func appendTo() {
 }
 
 func main() {
-	string.ToggleRuneString()
+	fmt.Println(string.Comma3("1348.89"))
 }

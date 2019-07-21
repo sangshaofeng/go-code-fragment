@@ -1,9 +1,10 @@
 package string
 
 import (
-	"fmt"
-	"unicode/utf8"
 	"bytes"
+	"fmt"
+	"strings"
+	"unicode/utf8"
 )
 
 // golang中string底层是通过byte数组实现的。中文字符在unicode下占2个字节，
@@ -26,15 +27,15 @@ func GetStringLength() {
 // 以下方法是rune和string的相互转换，在第一个Printf中的% x参数用于在每个十六进制数字前插入一个空格
 func ToggleRuneString() {
 	s := "プログラム"
-	fmt.Printf("% x\n", s)      // "e3 83 97 e3 83 ad e3 82 b0 e3 83 a9 e3 83 a0"
+	fmt.Printf("% x\n", s) // "e3 83 97 e3 83 ad e3 82 b0 e3 83 a9 e3 83 a0"
 	r := []rune(s)
 	fmt.Printf("%x\n", r) // "[30d7 30ed 30b0 30e9 30e0]"
 
 	// 如果是将一个[]rune类型的Unicode字符slice或数组转为string，则对它们进行UTF8编码
-	fmt.Println(string(r))  // "プログラム"
+	fmt.Println(string(r)) // "プログラム"
 
 	// 将一个整数转型为字符串意思是生成以只包含对应Unicode码点字符的UTF8字符串
-	fmt.Println(string(65))  // "A", not "65"
+	fmt.Println(string(65))     // "A", not "65"
 	fmt.Println(string(0x4eac)) // "京"
 
 	// 如果对应码点的字符是无效的，则用'\uFFFD'无效字符作为替换：
@@ -48,11 +49,11 @@ func HasPrefix(s, prefix string) bool {
 
 // 字符串后缀测试
 func HasSuffix(s, suffix string) bool {
-	return len(s) >= len(suffix) && s[len(s) - len(suffix):] == suffix
+	return len(s) >= len(suffix) && s[len(s)-len(suffix):] == suffix
 }
 
 // 包含子串测试
-func Contains(s, substr  string) bool {
+func Contains(s, substr string) bool {
 	for i := 0; i < len(s); i++ {
 		if HasPrefix(s[i:], substr) {
 			return true
@@ -82,9 +83,38 @@ func Comma2(s string) string {
 	var buf bytes.Buffer
 	p := n % 3
 	for i := 0; i < n; i++ {
-		if (i - p) % 3 == 0 && i !=0 {
+		if (i-p)%3 == 0 && i != 0 {
 			buf.WriteString(",") // or buf.WriteByte(',')
 		}
+		buf.WriteByte(s[i])
+	}
+	return buf.String()
+}
+
+// 完善comma函数，支持浮点数，使用递归处理
+func Comma3(s string) string {
+	var slice string
+	index := strings.Index(s, ".")
+	if index != -1 {
+		slice = s[:index]
+	} else {
+		slice = s
+	}
+	// 将小数点前的整数提取出来slice进行操作
+	n := len(slice)
+	if n <= 3 {
+		return s
+	}
+	var buf bytes.Buffer
+	p := n % 3
+	for i := 0; i < n; i++ {
+		if (i-p)%3 == 0 && i != 0 {
+			buf.WriteString(",") // or buf.WriteByte(',')
+		}
+		buf.WriteByte(slice[i])
+	}
+	// 拼接小数点和它后面的数字
+	for i := index; i < len(s); i++ {
 		buf.WriteByte(s[i])
 	}
 	return buf.String()
