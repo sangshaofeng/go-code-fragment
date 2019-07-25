@@ -1,7 +1,8 @@
 package main
 
 import (
-	"./string"
+	//"./string"
+	"./slice"
 	"fmt"
 	"unicode/utf8"
 )
@@ -36,5 +37,8 @@ func appendTo() {
 }
 
 func main() {
-	fmt.Println(string.Comma3("1348.89"))
+	fmt.Println("hello.go")
+	s := []byte("hello")
+	slice.ReverseSlice2(&s)
+	fmt.Println(string(s))
 }

@@ -21,4 +21,22 @@ func ReverseSlice(s []int) {
 	}
 }
 
+// 使用指针代替slice，完成上面的方法
+func ReverseSlice2(s *[]byte) {
+	i, j := 0, len(*s) - 1
+	for i < j {
+		(*s)[i], (*s)[j] = (*s)[j], (*s)[i]
+		i += 1
+		j -= 1
+	}
+}
+
+// 移除slice中间的某一位，slice目标slice, i要移除元素的位置
+func Remove(slice []int, i int) []int {
+	// copy(destSlice, srcSlice []T) int 返回实际发生复制的元素
+	// 将第二个slice里的元素拷贝到第一个slice里，拷贝的长度为两个slice中长度较小的长度值
+	// 这里相当于每一项往前一位，最后返回除最后一位的slice
+	copy(slice[i:], slice[i+1:])
+	return slice[:len(slice)-1]
+}
 
