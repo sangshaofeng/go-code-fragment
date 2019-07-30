@@ -22,13 +22,13 @@ import (
 // go语言遍历数组时，两个参数为 index(索引)，value(每一项的值)
 // go语言遍历map时，两个参数为 key(键)，value(值)
 func FmtSortedMap(m map[string]string) {
-	var keys[]string
+	keys := make([]string, 0, len(m))
 	for key := range m {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	for _, key := range keys {
-		fmt.Println(m[key])
+		fmt.Printf("%s\t%d\n", key, m[key])
 	}
 }
 
