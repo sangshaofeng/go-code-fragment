@@ -13,6 +13,8 @@ package _map
 import (
 	"fmt"
 	"sort"
+	"bufio"
+	"os"
 )
 
 // 如果要按顺序遍历key/value对，我们必须显式地对key进行排序，
@@ -32,4 +34,35 @@ func FmtSortedMap(m map[string]string) {
 	}
 }
 
+// 和slice一样，map之间也不能进行相等比较；唯一的例外是和nil进行比较。
+// 要判断两个map是否包含相同的key和value，必须通过一个循环实现:
+func equal(x, y map[string]int) bool {
+	if (len(x) != len(y)) {
+		return false
+	}
+	for k, xv := range x {
+		if yv, ok := y[k]; !ok || xv != yv {
+			return false
+		}
+	}
+	return true
+}
 
+// Go语言中并没有提供一个set类型，但是map中的key也是不相同的，
+// 可以用map实现类似set的功能，为了说明这一点，
+// 下面的dedup程序读取多行输入，但是只打印第一次出现的行
+func dedup() {
+	seen := make(map[string]bool)
+	input := bufio.NewScanner(os.Stdin)
+	for  input.Scan() {
+		line := input.Text()
+		if !seen[line] {
+			seen[line] = true
+			fmt.Println(line)
+		}
+	}
+	if err := input.Err(); err != nil {
+		fmt.Fprintf(os.Stderr, "dedup: %v\n", err)
+		os.Exit(1)
+	}
+}
